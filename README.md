@@ -1,3 +1,3 @@
-# React Project Boilerplate
+# Music Chart Maker
 
-Little repo for quickly spinning up react components
+A little project created on a Saturday afternoon

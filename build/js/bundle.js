@@ -9540,6 +9540,14 @@ var _reactDom = __webpack_require__(80);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _Toolbar = __webpack_require__(183);
+
+var _Toolbar2 = _interopRequireDefault(_Toolbar);
+
+var _Chart = __webpack_require__(182);
+
+var _Chart2 = _interopRequireDefault(_Chart);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9551,19 +9559,119 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    var chart = {
+      rows: []
+    };
+
+    _this.state = {
+      chart: chart
+    };
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'setActiveRow',
+    value: function setActiveRow(e) {
+      var rows = this.state.chart.rows.map(function (row) {
+        var updatedRow = Object.assign({}, row, {
+          active: row.id === e.target.id
+        });
+        return updatedRow;
+      });
+      var chart = Object.assign({}, this.state.chart, {
+        rows: rows
+      });
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
+    key: 'addRow',
+    value: function addRow(e) {
+      e.preventDefault();
+
+      // update rows
+      var rows = this.state.chart.rows.map(function (row) {
+        var updatedRow = Object.assign({}, row, {
+          active: false
+        });
+        return updatedRow;
+      });
+      rows.push({
+        id: '' + Date.now(),
+        active: true,
+        columns: []
+      });
+
+      // update chart
+      var chart = Object.assign({}, this.state.chart, {
+        rows: rows
+      });
+
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
+    key: 'addColumn',
+    value: function addColumn(e) {
+      e.preventDefault();
+
+      // update rows
+      var rows = this.state.chart.rows.map(function (row) {
+        var columns = row.columns;
+        if (row.active) {
+          columns.push({
+            id: '' + Date.now(),
+            key: 'C',
+            beats: [{ type: 'hit', id: '1' }, { type: 'hit', id: '2' }, { type: 'hit', id: '3' }, { type: 'hit', id: '4' }]
+          });
+        }
+        return Object.assign({}, row, {
+          columns: columns
+        });
+      });
+
+      // update chart
+      var chart = Object.assign({}, this.state.chart, {
+        rows: rows
+      });
+
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         null,
-        'My App'
+        _react2.default.createElement(_Toolbar2.default, {
+          chart: this.state.chart,
+          addRow: function addRow(e) {
+            return _this2.addRow(e);
+          },
+          addColumn: function addColumn(e) {
+            return _this2.addColumn(e);
+          },
+          deleteRow: function deleteRow(e) {
+            return _this2.deleteRow(e);
+          }
+        }),
+        _react2.default.createElement(_Chart2.default, {
+          chart: this.state.chart,
+          setActiveRow: function setActiveRow(e) {
+            return _this2.setActiveRow(e);
+          }
+        })
       );
     }
   }]);
@@ -22024,6 +22132,304 @@ function traverseAllChildren(children, callback, traverseContext) {
 }
 
 module.exports = traverseAllChildren;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 182 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(81);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(185);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Chart = function (_React$Component) {
+  _inherits(Chart, _React$Component);
+
+  function Chart(props) {
+    _classCallCheck(this, Chart);
+
+    var _this = _possibleConstructorReturn(this, (Chart.__proto__ || Object.getPrototypeOf(Chart)).call(this, props));
+
+    _this.setActiveRow.bind(_this);
+    return _this;
+  }
+
+  _createClass(Chart, [{
+    key: 'setActiveRow',
+    value: function setActiveRow(e) {
+      this.props.setActiveRow(e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var rows = this.props.chart.rows;
+      return _react2.default.createElement(
+        'div',
+        { id: 'chart' },
+        rows.map(function (row) {
+          return _react2.default.createElement(
+            'div',
+            {
+              className: 'row' + (row.active ? ' active' : ''),
+              key: row.id,
+              id: row.id,
+              onClick: function onClick(e) {
+                return _this2.setActiveRow(e);
+              }
+            },
+            _react2.default.createElement(
+              'div',
+              { className: 'label' },
+              row.label || 'label'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'columns' },
+              row.columns.map(function (column) {
+                return _react2.default.createElement(
+                  'div',
+                  {
+                    className: 'column',
+                    key: column.id
+                  },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'key' },
+                    column.key
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'beats' },
+                    column.beats.map(function (beat) {
+                      return _react2.default.createElement('div', { key: beat.id, className: 'beat ' + beat.type });
+                    })
+                  )
+                );
+              })
+            )
+          );
+        })
+      );
+    }
+  }]);
+
+  return Chart;
+}(_react2.default.Component);
+
+Chart.propTypes = {
+  setActiveRow: _propTypes2.default.func.isRequired,
+  chart: _propTypes2.default.shape({
+    rows: _propTypes2.default.array
+  }).isRequired
+};
+
+exports.default = Chart;
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(81);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(185);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Toolbar = function (_React$Component) {
+  _inherits(Toolbar, _React$Component);
+
+  function Toolbar() {
+    _classCallCheck(this, Toolbar);
+
+    return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));
+  }
+
+  _createClass(Toolbar, [{
+    key: 'render',
+    value: function render() {
+      var activeId = null;
+      for (var i = 0; i < this.props.chart.rows.length; i += 1) {
+        var row = this.props.chart.rows[i];
+        if (row.active) {
+          activeId = row.id;
+        }
+      }
+      return _react2.default.createElement(
+        'div',
+        { id: 'toolbar' },
+        _react2.default.createElement(
+          'div',
+          { id: 'chart-controls', className: 'control-group' },
+          _react2.default.createElement(
+            'button',
+            { onClick: this.props.addRow },
+            'Add Row'
+          )
+        ),
+        activeId === null ? null : _react2.default.createElement(
+          'div',
+          { id: 'row-controls', className: 'control-group' },
+          _react2.default.createElement(
+            'button',
+            { onClick: this.props.addColumn },
+            'Add Column'
+          )
+        )
+      );
+    }
+  }]);
+
+  return Toolbar;
+}(_react2.default.Component);
+
+Toolbar.propTypes = {
+  chart: _propTypes2.default.shape({
+    rows: _propTypes2.default.array
+  }).isRequired,
+  addRow: _propTypes2.default.func.isRequired,
+  addColumn: _propTypes2.default.func.isRequired
+};
+
+exports.default = Toolbar;
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+
+
+var emptyFunction = __webpack_require__(9);
+var invariant = __webpack_require__(1);
+
+module.exports = function() {
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  function shim() {
+    invariant(
+      false,
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+  };
+  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  };
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim
+  };
+
+  ReactPropTypes.checkPropTypes = emptyFunction;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(98)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(184)();
+}
+
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
