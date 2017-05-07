@@ -13,16 +13,26 @@ body {
       margin-right: 12px;
       border-right: 1px solid #ffffff;
       padding-right: 12px; }
+  #toolbar input {
+    display: inline-block;
+    padding: 12px;
+    border: 1px solid #04a8db;
+    border-radius: 3px;
+    margin-right: 7px;
+    outline: none; }
   #toolbar button {
     -webkit-appearance: none;
-    border: 1px solid #d8d1ff;
+    border: 1px solid #04a8db;
     border-radius: 3px;
     padding: 12px;
     cursor: pointer;
     background: #fff;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    margin-right: 7px;
+    outline: none; }
     #toolbar button:hover {
-      background: #d8d1ff; }
+      background: #04a8db;
+      color: #fff; }
 
 #chart {
   padding: 24px; }
@@ -31,20 +41,29 @@ body {
     padding: 24px;
     background: transparent;
     margin-bottom: 12px;
-    border: 1px solid #ccc; }
+    border: 1px solid #ccc;
+    position: relative;
+    z-index: 0; }
     #chart .row.active {
-      -webkit-box-shadow: 0px 0px 4px rgba(150, 45, 222, 0.51); }
+      -webkit-box-shadow: 0px 0px 4px #04a8db; }
     #chart .row .label {
       color: #333;
       font-style: italic;
       font-size: 18px;
-      margin-bottom: 1em; }
+      margin-bottom: 1em;
+      display: inline-block; }
     #chart .row .columns .column {
       display: inline-block;
       text-align: center;
-      margin-right: 24px; }
+      position: relative;
+      z-index: 1;
+      padding: 12px; }
+      #chart .row .columns .column.active {
+        -webkit-box-shadow: 0px 0px 4px #04a8db; }
       #chart .row .columns .column:last-of-type {
         margin-right: 0; }
+      #chart .row .columns .column .key {
+        height: 24px; }
       #chart .row .columns .column .beats {
         border: 1px solid rgba(0, 0, 0, 0.2);
         height: 80px; }

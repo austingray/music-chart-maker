@@ -1,3 +1,5 @@
+$activeColor: rgba(4, 168, 219, 1);
+
 body {
   margin: 0;
   color:#333;
@@ -16,16 +18,27 @@ body {
       padding-right:12px;
     }
   }
+  input {
+    display:inline-block;
+    padding:12px;
+    border: 1px solid $activeColor;
+    border-radius: 3px;
+    margin-right:7px;
+    outline: none;
+  }
   button {
     -webkit-appearance: none;
-    border: 1px solid #d8d1ff;
+    border: 1px solid $activeColor;
     border-radius: 3px;
     padding: 12px;
     cursor:pointer;
     background:#fff;
     text-transform: uppercase;
+    margin-right:7px;
+    outline: none;
     &:hover {
-      background:#d8d1ff;
+      background:$activeColor;
+      color:#fff;
     }
   }
 }
@@ -38,22 +51,33 @@ body {
     background:transparent;
     margin-bottom:12px;
     border:1px solid #ccc;
+    position:relative;
+    z-index:0;
     &.active {
-      -webkit-box-shadow: 0px 0px 4px rgba(150, 45, 222, 0.51);
+      -webkit-box-shadow: 0px 0px 4px $activeColor;
     }
     .label {
       color: #333;
       font-style: italic;
       font-size:18px;
       margin-bottom: 1em;
+      display: inline-block;
     }
     .columns {
       .column {
         display:inline-block;
         text-align:center;
-        margin-right:24px;
+        position:relative;
+        z-index:1;
+        padding:12px;
+        &.active {
+          -webkit-box-shadow: 0px 0px 4px $activeColor;
+        }
         &:last-of-type {
           margin-right:0;
+        }
+        .key {
+          height:24px;
         }
         .beats {
           border:1px solid rgba(0,0,0, 0.2);

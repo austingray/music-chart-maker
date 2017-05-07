@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Chart extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.setActiveRow.bind(this);
-  }
-  setActiveRow(e) {
-    this.props.setActiveRow(e);
+  setActiveItem(e) {
+    const itemId = jQuery(e.target).closest('[id]').attr('id');
+    this.props.setActiveItem(itemId);
   }
   render() {
     const rows = this.props.chart.rows;
@@ -20,17 +16,19 @@ class Chart extends React.Component {
               className={`row${row.active ? ' active' : ''}`}
               key={row.id}
               id={row.id}
-              onClick={e => this.setActiveRow(e)}
+              onClick={e => this.setActiveItem(e)}
             >
               <div className="label">
-                {row.label || 'label'}
+                {row.label || 'Label'}
               </div>
               <div className="columns">
                 {
                   row.columns.map(column =>
                     <div
-                      className="column"
+                      className={`column${column.active ? ' active' : ''}`}
                       key={column.id}
+                      id={column.id}
+                      onClick={e => this.props.setActiveItem(e)}
                     >
                       <div className="key">{column.key}</div>
                       <div className="beats">
@@ -51,7 +49,7 @@ class Chart extends React.Component {
 }
 
 Chart.propTypes = {
-  setActiveRow: PropTypes.func.isRequired,
+  setActiveItem: PropTypes.func.isRequired,
   chart: PropTypes.shape({
     rows: PropTypes.array,
   }).isRequired,
