@@ -40,6 +40,14 @@ class Chart extends React.Component {
                   )
                 }
               </div>
+              {
+                row.repeatActive
+                  ? (
+                    <div className="repeats">
+                      Repeat {row.repeatTimes}X
+                    </div>
+                  ) : null
+              }
             </div>,
           )
         }

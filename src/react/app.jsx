@@ -31,7 +31,7 @@ class App extends React.Component {
     });
     this.setState({
       chart,
-    })
+    });
   }
   addRow(e) {
     e.preventDefault();
@@ -48,6 +48,9 @@ class App extends React.Component {
       id: `${Date.now()}`,
       active: true,
       columns: [],
+      perline: 4,
+      repeatActive: false,
+      repeatTimes: 4,
     });
 
     // update chart
@@ -103,7 +106,6 @@ class App extends React.Component {
       return updatedRow;
     });
 
-    // update chart
     const chart = Object.assign({}, this.state.chart, {
       rows,
     });
@@ -130,6 +132,43 @@ class App extends React.Component {
       chart,
     });
   }
+  updateRowProp(prop, val) {
+    const rows = this.state.chart.rows.map((row) => {
+      const newVal = row.active
+        ? val
+        : row[prop];
+      return Object.assign({}, row, {
+        [prop]: newVal,
+      });
+    });
+    const chart = Object.assign({}, this.state.chart, {
+      rows,
+    });
+    this.setState({
+      chart,
+    });
+  }
+  toggleRepeat(e) {
+    e.preventDefault();
+
+    const rows = this.state.chart.rows.map((row) => {
+      const active = row.active
+        ? !row.repeatActive
+        : row.repeatActive;
+      const updatedRow = Object.assign({}, row, {
+        repeatActive: active,
+      });
+      return updatedRow;
+    });
+
+    const chart = Object.assign({}, this.state.chart, {
+      rows,
+    });
+
+    this.setState({
+      chart,
+    });
+  }
   render() {
     return (
       <div>
@@ -140,6 +179,8 @@ class App extends React.Component {
           addColumn={e => this.addColumn(e)}
           updateKey={e => this.updateKey(e)}
           deleteRow={e => this.deleteRow(e)}
+          toggleRepeat={e => this.toggleRepeat(e)}
+          updateRowProp={(prop, val) => this.updateRowProp(prop, val)}
         />
         <Chart
           chart={this.state.chart}

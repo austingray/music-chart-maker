@@ -20,6 +20,17 @@ body {
     border-radius: 3px;
     margin-right: 7px;
     outline: none; }
+  #toolbar label {
+    position: relative; }
+    #toolbar label span {
+      position: absolute;
+      left: 12px;
+      top: 3px;
+      bottom: 0;
+      margin: auto;
+      text-transform: uppercase;
+      color: #333;
+      font: 11px 'system-ui'; }
   #toolbar button {
     -webkit-appearance: none;
     border: 1px solid #04a8db;
@@ -51,40 +62,47 @@ body {
       font-style: italic;
       font-size: 18px;
       margin-bottom: 1em;
+      display: block; }
+    #chart .row .columns {
       display: inline-block; }
-    #chart .row .columns .column {
+      #chart .row .columns .column {
+        display: inline-block;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        padding: 12px;
+        vertical-align: middle; }
+        #chart .row .columns .column.active {
+          -webkit-box-shadow: 0px 0px 4px #04a8db; }
+        #chart .row .columns .column:last-of-type {
+          margin-right: 0; }
+        #chart .row .columns .column .key {
+          height: 24px; }
+        #chart .row .columns .column .beats {
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          height: 80px; }
+          #chart .row .columns .column .beats .beat {
+            display: inline-block;
+            width: 24px;
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            height: 80px;
+            position: relative; }
+            #chart .row .columns .column .beats .beat:last-of-type {
+              border-right: 0; }
+            #chart .row .columns .column .beats .beat.hit:after {
+              content: "";
+              position: absolute;
+              width: 4px;
+              height: 40px;
+              background: #000000;
+              border-radius: 50%;
+              left: 0;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              margin: auto;
+              transform: rotate(4deg);
+              /* Standard syntax */ }
+    #chart .row .repeats {
       display: inline-block;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      padding: 12px; }
-      #chart .row .columns .column.active {
-        -webkit-box-shadow: 0px 0px 4px #04a8db; }
-      #chart .row .columns .column:last-of-type {
-        margin-right: 0; }
-      #chart .row .columns .column .key {
-        height: 24px; }
-      #chart .row .columns .column .beats {
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        height: 80px; }
-        #chart .row .columns .column .beats .beat {
-          display: inline-block;
-          width: 24px;
-          border-right: 1px solid rgba(0, 0, 0, 0.2);
-          height: 80px;
-          position: relative; }
-          #chart .row .columns .column .beats .beat:last-of-type {
-            border-right: 0; }
-          #chart .row .columns .column .beats .beat.hit:after {
-            content: "";
-            position: absolute;
-            width: 4px;
-            height: 40px;
-            background: #000000;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            transform: rotate(3deg);
-            /* Standard syntax */ }
+      margin-left: 12px; }
