@@ -10089,11 +10089,21 @@ var Chart = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'chart' },
-        this.props.chart.title.length > 0 ? _react2.default.createElement(
-          'h1',
+        _react2.default.createElement(
+          'header',
           null,
-          this.props.chart.title
-        ) : null,
+          this.props.chart.title.length > 0 ? _react2.default.createElement(
+            'h1',
+            null,
+            this.props.chart.title
+          ) : null,
+          this.props.chart.author.length > 0 ? _react2.default.createElement(
+            'p',
+            null,
+            'By ',
+            this.props.chart.author
+          ) : null
+        ),
         rows.map(function (row) {
           return _react2.default.createElement(
             'div',
@@ -10162,6 +10172,7 @@ Chart.propTypes = {
   setActiveItem: _propTypes2.default.func.isRequired,
   chart: _propTypes2.default.shape({
     title: _propTypes2.default.string,
+    author: _propTypes2.default.string,
     rows: _propTypes2.default.array
   }).isRequired
 };
@@ -10212,6 +10223,7 @@ function Toolbar(_ref) {
       toggleEndOfLine = _ref.toggleEndOfLine,
       removeActive = _ref.removeActive,
       updateTitle = _ref.updateTitle,
+      updateAuthor = _ref.updateAuthor,
       saveLoad = _ref.saveLoad;
 
   // determine active row or column
@@ -10245,7 +10257,9 @@ function Toolbar(_ref) {
     ),
     _react2.default.createElement(_ChartControls2.default, {
       addRow: addRow,
-      updateTitle: updateTitle
+      updateTitle: updateTitle,
+      updateAuthor: updateAuthor,
+      chart: chart
     }),
     _react2.default.createElement(_RowControls2.default, {
       row: activeRow,
@@ -10266,6 +10280,7 @@ function Toolbar(_ref) {
 
 Toolbar.propTypes = {
   updateTitle: _propTypes2.default.func.isRequired,
+  updateAuthor: _propTypes2.default.func.isRequired,
   removeActive: _propTypes2.default.func.isRequired,
   toggleEndOfLine: _propTypes2.default.func.isRequired,
   updateRowProp: _propTypes2.default.func.isRequired,
@@ -10312,13 +10327,16 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ChartControls(_ref) {
-  var addRow = _ref.addRow,
-      updateTitle = _ref.updateTitle;
+  var chart = _ref.chart,
+      addRow = _ref.addRow,
+      updateTitle = _ref.updateTitle,
+      updateAuthor = _ref.updateAuthor;
 
   return _react2.default.createElement(
     'div',
     { id: 'chart-controls', className: 'control-group' },
-    _react2.default.createElement('input', { type: 'text', onChange: updateTitle, placeholder: 'Song Title' }),
+    _react2.default.createElement('input', { type: 'text', value: chart.title, onChange: updateTitle, placeholder: 'Song Title' }),
+    _react2.default.createElement('input', { type: 'text', value: chart.author, onChange: updateAuthor, placeholder: 'Band/Author' }),
     _react2.default.createElement(
       'button',
       { onClick: addRow },
@@ -10328,6 +10346,11 @@ function ChartControls(_ref) {
 }
 
 ChartControls.propTypes = {
+  chart: _propTypes2.default.shape({
+    title: _propTypes2.default.string,
+    author: _propTypes2.default.string
+  }).isRequired,
+  updateAuthor: _propTypes2.default.func.isRequired,
   updateTitle: _propTypes2.default.func.isRequired,
   addRow: _propTypes2.default.func.isRequired
 };
@@ -10635,6 +10658,7 @@ var App = function (_React$Component) {
       showSaveAndLoadScreen: false,
       chart: {
         title: '',
+        author: '',
         rows: []
       }
     };
@@ -10750,6 +10774,17 @@ var App = function (_React$Component) {
       var title = e.target.value;
       var chart = Object.assign({}, this.state.chart, {
         title: title
+      });
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
+    key: 'updateAuthor',
+    value: function updateAuthor(e) {
+      var author = e.target.value;
+      var chart = Object.assign({}, this.state.chart, {
+        author: author
       });
       this.setState({
         chart: chart
@@ -10907,9 +10942,12 @@ var App = function (_React$Component) {
             ),
             _react2.default.createElement(
               'button',
-              { onClick: function onClick() {
-                  return _this2.setState({ showSaveAndLoadScreen: false });
-                } },
+              {
+                onClick: function onClick(e) {
+                  e.preventDefault();
+                  _this2.setState({ showSaveAndLoadScreen: false });
+                }
+              },
               'Cancel'
             )
           )
@@ -10949,6 +10987,9 @@ var App = function (_React$Component) {
           },
           updateTitle: function updateTitle(e) {
             return _this2.updateTitle(e);
+          },
+          updateAuthor: function updateAuthor(e) {
+            return _this2.updateAuthor(e);
           },
           saveLoad: function saveLoad(e) {
             return _this2.saveLoad(e);

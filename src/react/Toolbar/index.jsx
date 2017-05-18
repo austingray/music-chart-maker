@@ -15,6 +15,7 @@ function Toolbar({
   toggleEndOfLine,
   removeActive,
   updateTitle,
+  updateAuthor,
   saveLoad,
 }) {
   // determine active row or column
@@ -42,6 +43,8 @@ function Toolbar({
       <ChartControls
         addRow={addRow}
         updateTitle={updateTitle}
+        updateAuthor={updateAuthor}
+        chart={chart}
       />
       <RowControls
         row={activeRow}
@@ -68,6 +71,7 @@ function Toolbar({
 
 Toolbar.propTypes = {
   updateTitle: PropTypes.func.isRequired,
+  updateAuthor: PropTypes.func.isRequired,
   removeActive: PropTypes.func.isRequired,
   toggleEndOfLine: PropTypes.func.isRequired,
   updateRowProp: PropTypes.func.isRequired,

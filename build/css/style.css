@@ -22,6 +22,13 @@ body {
     border: 1px solid #04a8db;
     margin: 12px 0; }
 
+header {
+  margin-bottom: 12px; }
+  header h1 {
+    margin: 0; }
+  header p {
+    margin: 0; }
+
 .control-group {
   display: inline-block; }
   .control-group:first-of-type {
@@ -117,12 +124,12 @@ button {
           height: 24px; }
         #chart .row .columns .column .beats {
           border: 1px solid rgba(0, 0, 0, 0.2);
-          height: 80px; }
+          height: 40px; }
           #chart .row .columns .column .beats .beat {
             display: inline-block;
             width: 24px;
             border-right: 1px solid rgba(0, 0, 0, 0.2);
-            height: 80px;
+            height: 40px;
             position: relative; }
             #chart .row .columns .column .beats .beat:last-of-type {
               border-right: 0; }
@@ -130,7 +137,7 @@ button {
               content: "";
               position: absolute;
               width: 4px;
-              height: 40px;
+              height: 20px;
               background: #000000;
               border-radius: 50%;
               left: 0;
@@ -145,5 +152,10 @@ button {
       margin-left: 12px; }
 
 @media print {
+  html, body {
+    margin: 0;
+    padding: 0; }
   #toolbar {
-    display: none; } }
+    display: none; }
+  #chart {
+    padding: 0; } }

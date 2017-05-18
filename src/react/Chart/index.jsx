@@ -10,11 +10,18 @@ class Chart extends React.Component {
     const rows = this.props.chart.rows;
     return (
       <div id="chart">
-        {
-          this.props.chart.title.length > 0
-            ? <h1>{this.props.chart.title}</h1>
-            : null
-        }
+        <header>
+          {
+            this.props.chart.title.length > 0
+              ? <h1>{this.props.chart.title}</h1>
+              : null
+          }
+          {
+            this.props.chart.author.length > 0
+              ? <p>By {this.props.chart.author}</p>
+              : null
+          }
+        </header>
         {
           rows.map(row =>
             <div
@@ -70,6 +77,7 @@ Chart.propTypes = {
   setActiveItem: PropTypes.func.isRequired,
   chart: PropTypes.shape({
     title: PropTypes.string,
+    author: PropTypes.string,
     rows: PropTypes.array,
   }).isRequired,
 };

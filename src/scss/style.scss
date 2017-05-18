@@ -28,6 +28,16 @@ body {
   }
 }
 
+header {
+  h1 {
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
+  margin-bottom:12px;
+}
+
 .control-group {
   display:inline-block;
   &:first-of-type {
@@ -136,12 +146,12 @@ button {
         }
         .beats {
           border:1px solid rgba(0,0,0, 0.2);
-          height:80px;
+          height:40px;
           .beat {
             display:inline-block;
             width:24px;
             border-right: 1px solid rgba(0,0,0, 0.2);
-            height:80px;
+            height:40px;
             position:relative;
             &:last-of-type {
               border-right:0;
@@ -151,7 +161,7 @@ button {
                 content: "";
                 position:absolute;
                 width:4px;
-                height:40px;
+                height:20px;
                 background:#000000;
                 border-radius:50%;
                 left:0;
@@ -174,7 +184,14 @@ button {
 }
 
 @media print {
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
   #toolbar {
     display: none;
+  }
+  #chart {
+    padding: 0;
   }
 }

@@ -11,6 +11,7 @@ class App extends React.Component {
       showSaveAndLoadScreen: false,
       chart: {
         title: '',
+        author: '',
         rows: [],
       },
     };
@@ -121,6 +122,15 @@ class App extends React.Component {
     const title = e.target.value;
     const chart = Object.assign({}, this.state.chart, {
       title,
+    });
+    this.setState({
+      chart,
+    });
+  }
+  updateAuthor(e) {
+    const author = e.target.value;
+    const chart = Object.assign({}, this.state.chart, {
+      author,
     });
     this.setState({
       chart,
@@ -243,7 +253,12 @@ class App extends React.Component {
             <label htmlFor="current-chart-state">Current Chart</label>
             <textarea id="current-chart-state" defaultValue={JSON.stringify(this.state.chart)} />
             <button>Load Chart</button>
-            <button onClick={() => this.setState({ showSaveAndLoadScreen: false })}>Cancel</button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                this.setState({ showSaveAndLoadScreen: false });
+              }}
+            >Cancel</button>
           </form>
         </div>
       );
@@ -262,6 +277,7 @@ class App extends React.Component {
           toggleEndOfLine={e => this.toggleEndOfLine(e)}
           removeActive={() => this.removeActive()}
           updateTitle={e => this.updateTitle(e)}
+          updateAuthor={e => this.updateAuthor(e)}
           saveLoad={e => this.saveLoad(e)}
         />
         <Chart
