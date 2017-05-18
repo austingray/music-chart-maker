@@ -29,7 +29,7 @@ class ColumnControls extends React.Component {
         />
         <label htmlFor="toggle-end-of-line">
           <input
-            checked={this.state.endOfLine}
+            checked={column.endOfLine}
             id="toggle-end-of-line"
             type="checkbox"
             value="on"
