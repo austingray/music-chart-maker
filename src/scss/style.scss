@@ -6,7 +6,79 @@ body {
   padding-top:64px;
 }
 
+#save-load-screen {
+  max-width:640px;
+  margin:0 auto;
+  width:88%;
+  label {
+    font-size:24px;
+    display:block;
+    margin-bottom: 24px;
+  }
+  textarea {
+    display: block;
+    width:100%;
+    height: 80%;
+    min-height:120px;
+    padding:12px;
+    position:relative;
+    -webkit-appearance: none;
+    border: 1px solid $activeColor;
+    margin: 12px 0;
+  }
+}
+
+.control-group {
+  display:inline-block;
+  &:first-of-type {
+    margin-right:12px;
+    border-right: 1px solid #ffffff;
+    padding-right:12px;
+  }
+}
+input {
+  display:inline-block;
+  padding:12px;
+  border: 1px solid $activeColor;
+  border-radius: 3px;
+  margin-right:7px;
+  outline: none;
+}
+label {
+  position:relative;
+  text-transform: uppercase;
+  color:#333;
+  font: 11px 'system-ui';
+  &[for="toggle-end-of-line"] {
+    margin-right:14px;
+  }
+  span {
+    position:absolute;
+    left: 12px;
+    bottom: 0;
+    margin: auto;
+  }
+}
+button {
+  -webkit-appearance: none;
+  border: 1px solid $activeColor;
+  border-radius: 3px;
+  padding: 12px;
+  cursor:pointer;
+  background:#fff;
+  text-transform: uppercase;
+  margin-right:7px;
+  outline: none;
+  &:hover {
+    background:$activeColor;
+    color:#fff;
+  }
+}
+
 #toolbar {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
   display: block;
   background: #F3F3F3;
   margin-bottom:12px;
@@ -15,51 +87,8 @@ body {
   top:0;
   width:100%;
   z-index:99;
-  .control-group {
-    display:inline-block;
-    &:first-of-type {
-      margin-right:12px;
-      border-right: 1px solid #ffffff;
-      padding-right:12px;
-    }
-  }
-  input {
-    display:inline-block;
-    padding:12px;
-    border: 1px solid $activeColor;
-    border-radius: 3px;
-    margin-right:7px;
-    outline: none;
-  }
-  label {
-    position:relative;
-    text-transform: uppercase;
-    color:#333;
-    font: 11px 'system-ui';
-    &[for="toggle-end-of-line"] {
-      margin-right:14px;
-    }
-    span {
-      position:absolute;
-      left: 12px;
-      bottom: 0;
-      margin: auto;
-    }
-  }
-  button {
-    -webkit-appearance: none;
-    border: 1px solid $activeColor;
-    border-radius: 3px;
-    padding: 12px;
-    cursor:pointer;
-    background:#fff;
-    text-transform: uppercase;
-    margin-right:7px;
-    outline: none;
-    &:hover {
-      background:$activeColor;
-      color:#fff;
-    }
+  #save-and-load {
+    float: right;
   }
 }
 

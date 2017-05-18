@@ -10211,7 +10211,8 @@ function Toolbar(_ref) {
       updateRowProp = _ref.updateRowProp,
       toggleEndOfLine = _ref.toggleEndOfLine,
       removeActive = _ref.removeActive,
-      updateTitle = _ref.updateTitle;
+      updateTitle = _ref.updateTitle,
+      saveLoad = _ref.saveLoad;
 
   // determine active row or column
   var activeRow = null;
@@ -10233,6 +10234,15 @@ function Toolbar(_ref) {
   return _react2.default.createElement(
     'div',
     { id: 'toolbar' },
+    _react2.default.createElement(
+      'div',
+      { id: 'save-and-load' },
+      _react2.default.createElement(
+        'button',
+        { onClick: saveLoad },
+        'Save/Load'
+      )
+    ),
     _react2.default.createElement(_ChartControls2.default, {
       addRow: addRow,
       updateTitle: updateTitle
@@ -10264,7 +10274,8 @@ Toolbar.propTypes = {
   updateLabel: _propTypes2.default.func.isRequired,
   addColumn: _propTypes2.default.func.isRequired,
   updateKey: _propTypes2.default.func.isRequired,
-  toggleRepeat: _propTypes2.default.func.isRequired
+  toggleRepeat: _propTypes2.default.func.isRequired,
+  saveLoad: _propTypes2.default.func.isRequired
 };
 
 exports.default = Toolbar;
@@ -10621,6 +10632,7 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
+      showSaveAndLoadScreen: false,
       chart: {
         title: '',
         rows: []
@@ -10847,10 +10859,62 @@ var App = function (_React$Component) {
       });
     }
   }, {
+    key: 'saveLoad',
+    value: function saveLoad() {
+      this.setState({
+        showSaveAndLoadScreen: true
+      });
+    }
+  }, {
+    key: 'loadChart',
+    value: function loadChart(e) {
+      e.preventDefault();
+      var chart = JSON.parse(document.getElementById('current-chart-state').value);
+      this.setState({
+        showSaveAndLoadScreen: false,
+        chart: chart
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      if (this.state.showSaveAndLoadScreen) {
+        return _react2.default.createElement(
+          'div',
+          { id: 'save-load-screen' },
+          _react2.default.createElement(
+            'form',
+            { onSubmit: function onSubmit(e) {
+                return _this2.loadChart(e);
+              } },
+            _react2.default.createElement(
+              'p',
+              null,
+              'Save the contents of the textarea in your favorite code editor. Paste it in the box below when you\'re ready to continue working on it, then hit the Load button.'
+            ),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'current-chart-state' },
+              'Current Chart'
+            ),
+            _react2.default.createElement('textarea', { id: 'current-chart-state', defaultValue: JSON.stringify(this.state.chart) }),
+            _react2.default.createElement(
+              'button',
+              null,
+              'Load Chart'
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: function onClick() {
+                  return _this2.setState({ showSaveAndLoadScreen: false });
+                } },
+              'Cancel'
+            )
+          )
+        );
+      }
       return _react2.default.createElement(
         'div',
         null,
@@ -10885,6 +10949,9 @@ var App = function (_React$Component) {
           },
           updateTitle: function updateTitle(e) {
             return _this2.updateTitle(e);
+          },
+          saveLoad: function saveLoad(e) {
+            return _this2.saveLoad(e);
           }
         }),
         _react2.default.createElement(_Chart2.default, {

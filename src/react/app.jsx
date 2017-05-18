@@ -8,6 +8,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      showSaveAndLoadScreen: false,
       chart: {
         title: '',
         rows: [],
@@ -220,7 +221,33 @@ class App extends React.Component {
       chart,
     });
   }
+  saveLoad() {
+    this.setState({
+      showSaveAndLoadScreen: true,
+    });
+  }
+  loadChart(e) {
+    e.preventDefault();
+    const chart = JSON.parse(document.getElementById('current-chart-state').value);
+    this.setState({
+      showSaveAndLoadScreen: false,
+      chart,
+    });
+  }
   render() {
+    if (this.state.showSaveAndLoadScreen) {
+      return (
+        <div id="save-load-screen">
+          <form onSubmit={e => this.loadChart(e)}>
+            <p>Save the contents of the textarea in your favorite code editor. Paste it in the box below when you're ready to continue working on it, then hit the Load button.</p>
+            <label htmlFor="current-chart-state">Current Chart</label>
+            <textarea id="current-chart-state" defaultValue={JSON.stringify(this.state.chart)} />
+            <button>Load Chart</button>
+            <button onClick={() => this.setState({ showSaveAndLoadScreen: false })}>Cancel</button>
+          </form>
+        </div>
+      );
+    }
     return (
       <div>
         <Toolbar
@@ -235,6 +262,7 @@ class App extends React.Component {
           toggleEndOfLine={e => this.toggleEndOfLine(e)}
           removeActive={() => this.removeActive()}
           updateTitle={e => this.updateTitle(e)}
+          saveLoad={e => this.saveLoad(e)}
         />
         <Chart
           chart={this.state.chart}

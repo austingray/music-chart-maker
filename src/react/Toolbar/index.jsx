@@ -15,6 +15,7 @@ function Toolbar({
   toggleEndOfLine,
   removeActive,
   updateTitle,
+  saveLoad,
 }) {
   // determine active row or column
   let activeRow = null;
@@ -35,6 +36,9 @@ function Toolbar({
   }
   return (
     <div id="toolbar">
+      <div id="save-and-load">
+        <button onClick={saveLoad}>Save/Load</button>
+      </div>
       <ChartControls
         addRow={addRow}
         updateTitle={updateTitle}
@@ -73,6 +77,7 @@ Toolbar.propTypes = {
   addColumn: PropTypes.func.isRequired,
   updateKey: PropTypes.func.isRequired,
   toggleRepeat: PropTypes.func.isRequired,
+  saveLoad: PropTypes.func.isRequired,
 };
 
 export default Toolbar;
