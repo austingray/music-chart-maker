@@ -9,6 +9,7 @@ class App extends React.Component {
 
     this.state = {
       chart: {
+        title: '',
         rows: [],
       },
     };
@@ -111,6 +112,15 @@ class App extends React.Component {
       rows,
     });
 
+    this.setState({
+      chart,
+    });
+  }
+  updateTitle(e) {
+    const title = e.target.value;
+    const chart = Object.assign({}, this.state.chart, {
+      title,
+    });
     this.setState({
       chart,
     });
@@ -224,6 +234,7 @@ class App extends React.Component {
           updateRowProp={(prop, val) => this.updateRowProp(prop, val)}
           toggleEndOfLine={e => this.toggleEndOfLine(e)}
           removeActive={() => this.removeActive()}
+          updateTitle={e => this.updateTitle(e)}
         />
         <Chart
           chart={this.state.chart}

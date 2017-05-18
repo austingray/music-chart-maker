@@ -11,6 +11,11 @@ class Chart extends React.Component {
     return (
       <div id="chart">
         {
+          this.props.chart.title.length > 0
+            ? <h1>{this.props.chart.title}</h1>
+            : null
+        }
+        {
           rows.map(row =>
             <div
               className={`row${row.active ? ' active' : ''}`}
@@ -64,6 +69,7 @@ class Chart extends React.Component {
 Chart.propTypes = {
   setActiveItem: PropTypes.func.isRequired,
   chart: PropTypes.shape({
+    title: PropTypes.string,
     rows: PropTypes.array,
   }).isRequired,
 };

@@ -143,3 +143,9 @@ body {
     }
   }
 }
+
+@media print {
+  #toolbar {
+    display: none;
+  }
+}

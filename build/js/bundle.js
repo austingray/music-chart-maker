@@ -10089,6 +10089,11 @@ var Chart = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'chart' },
+        this.props.chart.title.length > 0 ? _react2.default.createElement(
+          'h1',
+          null,
+          this.props.chart.title
+        ) : null,
         rows.map(function (row) {
           return _react2.default.createElement(
             'div',
@@ -10156,6 +10161,7 @@ var Chart = function (_React$Component) {
 Chart.propTypes = {
   setActiveItem: _propTypes2.default.func.isRequired,
   chart: _propTypes2.default.shape({
+    title: _propTypes2.default.string,
     rows: _propTypes2.default.array
   }).isRequired
 };
@@ -10204,7 +10210,8 @@ function Toolbar(_ref) {
       toggleRepeat = _ref.toggleRepeat,
       updateRowProp = _ref.updateRowProp,
       toggleEndOfLine = _ref.toggleEndOfLine,
-      removeActive = _ref.removeActive;
+      removeActive = _ref.removeActive,
+      updateTitle = _ref.updateTitle;
 
   // determine active row or column
   var activeRow = null;
@@ -10227,7 +10234,8 @@ function Toolbar(_ref) {
     'div',
     { id: 'toolbar' },
     _react2.default.createElement(_ChartControls2.default, {
-      addRow: addRow
+      addRow: addRow,
+      updateTitle: updateTitle
     }),
     _react2.default.createElement(_RowControls2.default, {
       row: activeRow,
@@ -10247,6 +10255,7 @@ function Toolbar(_ref) {
 }
 
 Toolbar.propTypes = {
+  updateTitle: _propTypes2.default.func.isRequired,
   removeActive: _propTypes2.default.func.isRequired,
   toggleEndOfLine: _propTypes2.default.func.isRequired,
   updateRowProp: _propTypes2.default.func.isRequired,
@@ -10292,11 +10301,13 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ChartControls(_ref) {
-  var addRow = _ref.addRow;
+  var addRow = _ref.addRow,
+      updateTitle = _ref.updateTitle;
 
   return _react2.default.createElement(
     'div',
     { id: 'chart-controls', className: 'control-group' },
+    _react2.default.createElement('input', { type: 'text', onChange: updateTitle, placeholder: 'Song Title' }),
     _react2.default.createElement(
       'button',
       { onClick: addRow },
@@ -10306,6 +10317,7 @@ function ChartControls(_ref) {
 }
 
 ChartControls.propTypes = {
+  updateTitle: _propTypes2.default.func.isRequired,
   addRow: _propTypes2.default.func.isRequired
 };
 
@@ -10610,6 +10622,7 @@ var App = function (_React$Component) {
 
     _this.state = {
       chart: {
+        title: '',
         rows: []
       }
     };
@@ -10715,6 +10728,17 @@ var App = function (_React$Component) {
         rows: rows
       });
 
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
+    key: 'updateTitle',
+    value: function updateTitle(e) {
+      var title = e.target.value;
+      var chart = Object.assign({}, this.state.chart, {
+        title: title
+      });
       this.setState({
         chart: chart
       });
@@ -10858,6 +10882,9 @@ var App = function (_React$Component) {
           },
           removeActive: function removeActive() {
             return _this2.removeActive();
+          },
+          updateTitle: function updateTitle(e) {
+            return _this2.updateTitle(e);
           }
         }),
         _react2.default.createElement(_Chart2.default, {

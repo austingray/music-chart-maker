@@ -115,3 +115,7 @@ body {
     #chart .row .repeats {
       display: inline-block;
       margin-left: 12px; }
+
+@media print {
+  #toolbar {
+    display: none; } }
