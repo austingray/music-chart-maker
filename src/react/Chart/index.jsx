@@ -23,21 +23,26 @@ class Chart extends React.Component {
               </div>
               <div className="columns">
                 {
-                  row.columns.map(column =>
-                    <div
-                      className={`column${column.active ? ' active' : ''}`}
-                      key={column.id}
-                      id={column.id}
-                      onClick={e => this.props.setActiveItem(e)}
-                    >
-                      <div className="key">{column.key}</div>
-                      <div className="beats">
-                        {
-                          column.beats.map(beat => <div key={beat.id} className={`beat ${beat.type}`} />)
-                        }
+                  row.columns.map((column, i) => {
+                    let className = 'column';
+                    className += column.active ? ' active' : '';
+                    className += column.endOfLine ? ' end-of-line' : '';
+                    return (
+                      <div
+                        className={className}
+                        key={column.id}
+                        id={column.id}
+                        onClick={e => this.props.setActiveItem(e)}
+                      >
+                        <div className="key">{column.key}</div>
+                        <div className="beats">
+                          {
+                            column.beats.map(beat => <div key={beat.id} className={`beat ${beat.type}`} />)
+                          }
+                        </div>
                       </div>
-                    </div>,
-                  )
+                    );
+                  })
                 }
               </div>
               {

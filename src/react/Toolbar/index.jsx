@@ -4,7 +4,16 @@ import ChartControls from './ChartControls';
 import RowControls from './RowControls';
 import ColumnControls from './ColumnControls';
 
-function Toolbar({ chart, addRow, addColumn, updateLabel, updateKey, toggleRepeat, updateRowProp }) {
+function Toolbar({
+  chart,
+  addRow,
+  addColumn,
+  updateLabel,
+  updateKey,
+  toggleRepeat,
+  updateRowProp,
+  toggleEndOfLine,
+}) {
   // determine active row or column
   let activeRow = null;
   let activeColumn = null;
@@ -34,15 +43,23 @@ function Toolbar({ chart, addRow, addColumn, updateLabel, updateKey, toggleRepea
         toggleRepeat={toggleRepeat}
         updateRowProp={updateRowProp}
       />
-      <ColumnControls
-        column={activeColumn}
-        updateKey={updateKey}
-      />
+      {
+        activeColumn
+          ? (
+            <ColumnControls
+              column={activeColumn}
+              updateKey={updateKey}
+              toggleEndOfLine={toggleEndOfLine}
+            />
+          ) : null
+      }
     </div>
   );
 }
 
 Toolbar.propTypes = {
+  toggleEndOfLine: PropTypes.func.isRequired,
+  updateRowProp: PropTypes.func.isRequired,
   chart: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   addRow: PropTypes.func.isRequired,
   updateLabel: PropTypes.func.isRequired,

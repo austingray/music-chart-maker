@@ -10108,11 +10108,14 @@ var Chart = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'columns' },
-              row.columns.map(function (column) {
+              row.columns.map(function (column, i) {
+                var className = 'column';
+                className += column.active ? ' active' : '';
+                className += column.endOfLine ? ' end-of-line' : '';
                 return _react2.default.createElement(
                   'div',
                   {
-                    className: 'column' + (column.active ? ' active' : ''),
+                    className: className,
                     key: column.id,
                     id: column.id,
                     onClick: function onClick(e) {
@@ -10199,7 +10202,8 @@ function Toolbar(_ref) {
       updateLabel = _ref.updateLabel,
       updateKey = _ref.updateKey,
       toggleRepeat = _ref.toggleRepeat,
-      updateRowProp = _ref.updateRowProp;
+      updateRowProp = _ref.updateRowProp,
+      toggleEndOfLine = _ref.toggleEndOfLine;
 
   // determine active row or column
   var activeRow = null;
@@ -10231,14 +10235,17 @@ function Toolbar(_ref) {
       toggleRepeat: toggleRepeat,
       updateRowProp: updateRowProp
     }),
-    _react2.default.createElement(_ColumnControls2.default, {
+    activeColumn ? _react2.default.createElement(_ColumnControls2.default, {
       column: activeColumn,
-      updateKey: updateKey
-    })
+      updateKey: updateKey,
+      toggleEndOfLine: toggleEndOfLine
+    }) : null
   );
 }
 
 Toolbar.propTypes = {
+  toggleEndOfLine: _propTypes2.default.func.isRequired,
+  updateRowProp: _propTypes2.default.func.isRequired,
   chart: _propTypes2.default.object.isRequired, // eslint-disable-line react/forbid-prop-types
   addRow: _propTypes2.default.func.isRequired,
   updateLabel: _propTypes2.default.func.isRequired,
@@ -10311,6 +10318,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(17);
 
 var _react2 = _interopRequireDefault(_react);
@@ -10321,39 +10330,80 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ColumnControls(_ref) {
-  var column = _ref.column,
-      updateKey = _ref.updateKey;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  if (column === null) {
-    return null;
-  }
-  return _react2.default.createElement(
-    'div',
-    { className: 'control-group' },
-    _react2.default.createElement('input', {
-      type: 'text',
-      placeholder: 'C',
-      name: column.id,
-      value: column.key || '',
-      onChange: updateKey
-    })
-  );
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-ColumnControls.defaultProps = {
-  column: {
-    id: '',
-    key: ''
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ColumnControls = function (_React$Component) {
+  _inherits(ColumnControls, _React$Component);
+
+  function ColumnControls(props) {
+    _classCallCheck(this, ColumnControls);
+
+    var _this = _possibleConstructorReturn(this, (ColumnControls.__proto__ || Object.getPrototypeOf(ColumnControls)).call(this, props));
+
+    _this.state = {
+      endOfLine: _this.props.column.endOfLine
+    };
+    return _this;
   }
-};
+
+  _createClass(ColumnControls, [{
+    key: 'toggleEndOfLine',
+    value: function toggleEndOfLine() {
+      this.setState({
+        endOfLine: !this.state.endOfLine
+      });
+      this.props.toggleEndOfLine();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var column = this.props.column;
+      var updateKey = this.props.updateKey;
+      return _react2.default.createElement(
+        'div',
+        { className: 'control-group' },
+        _react2.default.createElement('input', {
+          type: 'text',
+          placeholder: 'C',
+          name: column.id,
+          value: column.key || '',
+          onChange: updateKey
+        }),
+        _react2.default.createElement(
+          'label',
+          { htmlFor: 'toggle-end-of-line' },
+          _react2.default.createElement('input', {
+            checked: this.state.endOfLine,
+            id: 'toggle-end-of-line',
+            type: 'checkbox',
+            value: 'on',
+            onChange: function onChange() {
+              return _this2.toggleEndOfLine();
+            }
+          }),
+          ' Toggle end of line'
+        )
+      );
+    }
+  }]);
+
+  return ColumnControls;
+}(_react2.default.Component);
 
 ColumnControls.propTypes = {
   column: _propTypes2.default.shape({
-    id: '',
-    key: ''
-  }),
-  updateKey: _propTypes2.default.func.isRequired
+    id: _propTypes2.default.string,
+    key: _propTypes2.default.string,
+    endOfLine: _propTypes2.default.bool
+  }).isRequired,
+  updateKey: _propTypes2.default.func.isRequired,
+  toggleEndOfLine: _propTypes2.default.func.isRequired
 };
 
 exports.default = ColumnControls;
@@ -10455,26 +10505,7 @@ var RowControls = function (_React$Component) {
               _this2.props.updateRowProp('repeatTimes', e.target.value);
             }
           })
-        ) : null,
-        _react2.default.createElement(
-          'label',
-          { className: 'adjust-left-pad', htmlFor: 'perline' },
-          _react2.default.createElement(
-            'span',
-            null,
-            'Cols/Line:'
-          ),
-          _react2.default.createElement('input', {
-            type: 'number',
-            id: 'perline',
-            min: '1',
-            placeholder: '',
-            value: row.perline,
-            onChange: function onChange(e) {
-              _this2.props.updateRowProp('perline', e.target.value);
-            }
-          })
-        )
+        ) : null
       );
     }
   }]);
@@ -10619,7 +10650,8 @@ var App = function (_React$Component) {
             id: '' + Date.now(),
             active: false,
             key: 'C',
-            beats: [{ type: 'hit', id: '1' }, { type: 'hit', id: '2' }, { type: 'hit', id: '3' }, { type: 'hit', id: '4' }]
+            beats: [{ type: 'hit', id: '1' }, { type: 'hit', id: '2' }, { type: 'hit', id: '3' }, { type: 'hit', id: '4' }],
+            endOfLine: false
           });
         }
         return Object.assign({}, row, {
@@ -10711,6 +10743,26 @@ var App = function (_React$Component) {
       });
     }
   }, {
+    key: 'toggleEndOfLine',
+    value: function toggleEndOfLine() {
+      var rows = this.state.chart.rows.map(function (row) {
+        var columns = row.columns.map(function (column) {
+          return Object.assign({}, column, {
+            endOfLine: column.active ? !column.endOfLine : column.endOfLine
+          });
+        });
+        return Object.assign({}, row, {
+          columns: columns
+        });
+      });
+      var chart = Object.assign({}, this.state.chart, {
+        rows: rows
+      });
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -10740,6 +10792,9 @@ var App = function (_React$Component) {
           },
           updateRowProp: function updateRowProp(prop, val) {
             return _this2.updateRowProp(prop, val);
+          },
+          toggleEndOfLine: function toggleEndOfLine(e) {
+            return _this2.toggleEndOfLine(e);
           }
         }),
         _react2.default.createElement(_Chart2.default, {

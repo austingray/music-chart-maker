@@ -64,9 +64,12 @@ body {
       margin-bottom: 1em;
       display: block; }
     #chart .row .columns {
-      display: inline-block; }
+      display: inline-block;
+      vertical-align: middle; }
+      #chart .row .columns .end-of-line + .column {
+        clear: left; }
       #chart .row .columns .column {
-        display: inline-block;
+        float: left;
         text-align: center;
         position: relative;
         z-index: 1;

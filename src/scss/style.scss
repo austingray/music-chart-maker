@@ -78,8 +78,12 @@ body {
     }
     .columns {
       display:inline-block;
+      vertical-align: middle;
+      .end-of-line + .column {
+        clear:left;
+      }
       .column {
-        display:inline-block;
+        float:left;
         text-align:center;
         position:relative;
         z-index:1;

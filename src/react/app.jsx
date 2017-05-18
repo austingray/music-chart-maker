@@ -79,6 +79,7 @@ class App extends React.Component {
             { type: 'hit', id: '3' },
             { type: 'hit', id: '4' },
           ],
+          endOfLine: false,
         });
       }
       return Object.assign({}, row, {
@@ -169,6 +170,24 @@ class App extends React.Component {
       chart,
     });
   }
+  toggleEndOfLine() {
+    const rows = this.state.chart.rows.map((row) => {
+      const columns = row.columns.map(column =>
+        Object.assign({}, column, {
+          endOfLine: (column.active ? !column.endOfLine : column.endOfLine),
+        }),
+      );
+      return Object.assign({}, row, {
+        columns,
+      });
+    });
+    const chart = Object.assign({}, this.state.chart, {
+      rows,
+    });
+    this.setState({
+      chart,
+    });
+  }
   render() {
     return (
       <div>
@@ -181,6 +200,7 @@ class App extends React.Component {
           deleteRow={e => this.deleteRow(e)}
           toggleRepeat={e => this.toggleRepeat(e)}
           updateRowProp={(prop, val) => this.updateRowProp(prop, val)}
+          toggleEndOfLine={e => this.toggleEndOfLine(e)}
         />
         <Chart
           chart={this.state.chart}

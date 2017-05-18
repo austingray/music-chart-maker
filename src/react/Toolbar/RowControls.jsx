@@ -44,17 +44,6 @@ class RowControls extends React.Component {
               </label>
             ) : null
         }
-        <label className="adjust-left-pad" htmlFor="perline">
-          <span>Cols/Line:</span>
-          <input
-            type="number"
-            id="perline"
-            min="1"
-            placeholder=""
-            value={row.perline}
-            onChange={(e) => { this.props.updateRowProp('perline', e.target.value); }}
-          />
-        </label>
       </div>
     );
   }
