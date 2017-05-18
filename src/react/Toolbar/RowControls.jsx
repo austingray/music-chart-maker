@@ -10,6 +10,10 @@ class RowControls extends React.Component {
       });
     });
   }
+  removeActive(e) {
+    e.preventDefault();
+    this.props.removeActive();
+  }
   render() {
     const row = this.props.row;
     const addColumn = this.props.addColumn;
@@ -44,6 +48,7 @@ class RowControls extends React.Component {
               </label>
             ) : null
         }
+        <button onClick={e => this.removeActive(e)}>Remove</button>
       </div>
     );
   }
@@ -65,6 +70,7 @@ RowControls.propTypes = {
   addColumn: PropTypes.func.isRequired,
   toggleRepeat: PropTypes.func.isRequired,
   updateRowProp: PropTypes.func.isRequired,
+  removeActive: PropTypes.func.isRequired,
 };
 
 export default RowControls;

@@ -33,15 +33,17 @@ body {
   }
   label {
     position:relative;
+    text-transform: uppercase;
+    color:#333;
+    font: 11px 'system-ui';
+    &[for="toggle-end-of-line"] {
+      margin-right:14px;
+    }
     span {
       position:absolute;
       left: 12px;
-      top: 3px;
       bottom: 0;
       margin: auto;
-      text-transform: uppercase;
-      color:#333;
-      font: 11px 'system-ui';
     }
   }
   button {

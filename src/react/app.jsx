@@ -188,6 +188,28 @@ class App extends React.Component {
       chart,
     });
   }
+  removeActive() {
+    const rows = this.state.chart.rows.map((row) => {
+      if (row.active) {
+        return null;
+      }
+      const columns = row.columns.map((column) => {
+        if (column.active) {
+          return null;
+        }
+        return column;
+      }).filter(column => column);
+      return Object.assign({}, row, {
+        columns,
+      });
+    }).filter(row => row);
+    const chart = Object.assign({}, this.state.chart, {
+      rows,
+    });
+    this.setState({
+      chart,
+    });
+  }
   render() {
     return (
       <div>
@@ -201,6 +223,7 @@ class App extends React.Component {
           toggleRepeat={e => this.toggleRepeat(e)}
           updateRowProp={(prop, val) => this.updateRowProp(prop, val)}
           toggleEndOfLine={e => this.toggleEndOfLine(e)}
+          removeActive={() => this.removeActive()}
         />
         <Chart
           chart={this.state.chart}

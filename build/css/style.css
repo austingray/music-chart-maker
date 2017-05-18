@@ -26,16 +26,17 @@ body {
     margin-right: 7px;
     outline: none; }
   #toolbar label {
-    position: relative; }
+    position: relative;
+    text-transform: uppercase;
+    color: #333;
+    font: 11px 'system-ui'; }
+    #toolbar label[for="toggle-end-of-line"] {
+      margin-right: 14px; }
     #toolbar label span {
       position: absolute;
       left: 12px;
-      top: 3px;
       bottom: 0;
-      margin: auto;
-      text-transform: uppercase;
-      color: #333;
-      font: 11px 'system-ui'; }
+      margin: auto; }
   #toolbar button {
     -webkit-appearance: none;
     border: 1px solid #04a8db;

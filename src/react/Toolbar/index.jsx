@@ -13,6 +13,7 @@ function Toolbar({
   toggleRepeat,
   updateRowProp,
   toggleEndOfLine,
+  removeActive,
 }) {
   // determine active row or column
   let activeRow = null;
@@ -42,6 +43,7 @@ function Toolbar({
         addColumn={addColumn}
         toggleRepeat={toggleRepeat}
         updateRowProp={updateRowProp}
+        removeActive={removeActive}
       />
       {
         activeColumn
@@ -50,6 +52,7 @@ function Toolbar({
               column={activeColumn}
               updateKey={updateKey}
               toggleEndOfLine={toggleEndOfLine}
+              removeActive={removeActive}
             />
           ) : null
       }
@@ -58,6 +61,7 @@ function Toolbar({
 }
 
 Toolbar.propTypes = {
+  removeActive: PropTypes.func.isRequired,
   toggleEndOfLine: PropTypes.func.isRequired,
   updateRowProp: PropTypes.func.isRequired,
   chart: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

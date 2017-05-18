@@ -10203,7 +10203,8 @@ function Toolbar(_ref) {
       updateKey = _ref.updateKey,
       toggleRepeat = _ref.toggleRepeat,
       updateRowProp = _ref.updateRowProp,
-      toggleEndOfLine = _ref.toggleEndOfLine;
+      toggleEndOfLine = _ref.toggleEndOfLine,
+      removeActive = _ref.removeActive;
 
   // determine active row or column
   var activeRow = null;
@@ -10233,17 +10234,20 @@ function Toolbar(_ref) {
       updateLabel: updateLabel,
       addColumn: addColumn,
       toggleRepeat: toggleRepeat,
-      updateRowProp: updateRowProp
+      updateRowProp: updateRowProp,
+      removeActive: removeActive
     }),
     activeColumn ? _react2.default.createElement(_ColumnControls2.default, {
       column: activeColumn,
       updateKey: updateKey,
-      toggleEndOfLine: toggleEndOfLine
+      toggleEndOfLine: toggleEndOfLine,
+      removeActive: removeActive
     }) : null
   );
 }
 
 Toolbar.propTypes = {
+  removeActive: _propTypes2.default.func.isRequired,
   toggleEndOfLine: _propTypes2.default.func.isRequired,
   updateRowProp: _propTypes2.default.func.isRequired,
   chart: _propTypes2.default.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -10359,6 +10363,12 @@ var ColumnControls = function (_React$Component) {
       this.props.toggleEndOfLine();
     }
   }, {
+    key: 'removeActive',
+    value: function removeActive(e) {
+      e.preventDefault();
+      this.props.removeActive();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -10387,7 +10397,14 @@ var ColumnControls = function (_React$Component) {
               return _this2.toggleEndOfLine();
             }
           }),
-          ' Toggle end of line'
+          ' End Of Line'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick(e) {
+              return _this2.removeActive(e);
+            } },
+          'Remove'
         )
       );
     }
@@ -10403,7 +10420,8 @@ ColumnControls.propTypes = {
     endOfLine: _propTypes2.default.bool
   }).isRequired,
   updateKey: _propTypes2.default.func.isRequired,
-  toggleEndOfLine: _propTypes2.default.func.isRequired
+  toggleEndOfLine: _propTypes2.default.func.isRequired,
+  removeActive: _propTypes2.default.func.isRequired
 };
 
 exports.default = ColumnControls;
@@ -10457,6 +10475,12 @@ var RowControls = function (_React$Component) {
       });
     }
   }, {
+    key: 'removeActive',
+    value: function removeActive(e) {
+      e.preventDefault();
+      this.props.removeActive();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -10505,7 +10529,14 @@ var RowControls = function (_React$Component) {
               _this2.props.updateRowProp('repeatTimes', e.target.value);
             }
           })
-        ) : null
+        ) : null,
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick(e) {
+              return _this2.removeActive(e);
+            } },
+          'Remove'
+        )
       );
     }
   }]);
@@ -10528,7 +10559,8 @@ RowControls.propTypes = {
   updateLabel: _propTypes2.default.func.isRequired,
   addColumn: _propTypes2.default.func.isRequired,
   toggleRepeat: _propTypes2.default.func.isRequired,
-  updateRowProp: _propTypes2.default.func.isRequired
+  updateRowProp: _propTypes2.default.func.isRequired,
+  removeActive: _propTypes2.default.func.isRequired
 };
 
 exports.default = RowControls;
@@ -10763,6 +10795,34 @@ var App = function (_React$Component) {
       });
     }
   }, {
+    key: 'removeActive',
+    value: function removeActive() {
+      var rows = this.state.chart.rows.map(function (row) {
+        if (row.active) {
+          return null;
+        }
+        var columns = row.columns.map(function (column) {
+          if (column.active) {
+            return null;
+          }
+          return column;
+        }).filter(function (column) {
+          return column;
+        });
+        return Object.assign({}, row, {
+          columns: columns
+        });
+      }).filter(function (row) {
+        return row;
+      });
+      var chart = Object.assign({}, this.state.chart, {
+        rows: rows
+      });
+      this.setState({
+        chart: chart
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -10795,6 +10855,9 @@ var App = function (_React$Component) {
           },
           toggleEndOfLine: function toggleEndOfLine(e) {
             return _this2.toggleEndOfLine(e);
+          },
+          removeActive: function removeActive() {
+            return _this2.removeActive();
           }
         }),
         _react2.default.createElement(_Chart2.default, {

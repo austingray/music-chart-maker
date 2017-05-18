@@ -15,6 +15,10 @@ class ColumnControls extends React.Component {
     });
     this.props.toggleEndOfLine();
   }
+  removeActive(e) {
+    e.preventDefault();
+    this.props.removeActive();
+  }
   render() {
     const column = this.props.column;
     const updateKey = this.props.updateKey;
@@ -34,8 +38,9 @@ class ColumnControls extends React.Component {
             type="checkbox"
             value="on"
             onChange={() => this.toggleEndOfLine()}
-          /> Toggle end of line
+          /> End Of Line
         </label>
+        <button onClick={e => this.removeActive(e)}>Remove</button>
       </div>
     );
   }
@@ -49,6 +54,7 @@ ColumnControls.propTypes = {
   }).isRequired,
   updateKey: PropTypes.func.isRequired,
   toggleEndOfLine: PropTypes.func.isRequired,
+  removeActive: PropTypes.func.isRequired,
 };
 
 export default ColumnControls;
