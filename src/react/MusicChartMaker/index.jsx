@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Toolbar from './Toolbar';
 import Chart from './Chart';
 
-class App extends React.Component {
+class MusicChartMaker extends React.Component {
   constructor(props) {
     super(props);
 
@@ -290,6 +290,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <App />,
+  <MusicChartMaker />,
   document.getElementById('app'),
 );

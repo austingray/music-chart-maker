@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.join(__dirname, 'src/react/app.jsx'),
+  entry: path.join(__dirname, 'src/react/MusicChartMaker/index.jsx'),
   output: {
     path: path.join(__dirname, 'build/js'),
     filename: 'bundle.js',

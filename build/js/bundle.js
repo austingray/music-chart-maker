@@ -10646,13 +10646,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+var MusicChartMaker = function (_React$Component) {
+  _inherits(MusicChartMaker, _React$Component);
 
-  function App(props) {
-    _classCallCheck(this, App);
+  function MusicChartMaker(props) {
+    _classCallCheck(this, MusicChartMaker);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MusicChartMaker.__proto__ || Object.getPrototypeOf(MusicChartMaker)).call(this, props));
 
     _this.state = {
       showSaveAndLoadScreen: false,
@@ -10665,7 +10665,7 @@ var App = function (_React$Component) {
     return _this;
   }
 
-  _createClass(App, [{
+  _createClass(MusicChartMaker, [{
     key: 'setActiveItem',
     value: function setActiveItem(activeId) {
       var rows = this.state.chart.rows.map(function (row) {
@@ -11005,10 +11005,10 @@ var App = function (_React$Component) {
     }
   }]);
 
-  return App;
+  return MusicChartMaker;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+_reactDom2.default.render(_react2.default.createElement(MusicChartMaker, null), document.getElementById('app'));
 
 /***/ }),
 /* 90 */
