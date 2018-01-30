@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.join(__dirname, 'src/react/MusicChartMaker/index.jsx'),
+  entry: path.join(__dirname, 'src/react/App/index.jsx'),
   output: {
     path: path.join(__dirname, 'build/js'),
     filename: 'bundle.js',
@@ -17,7 +17,7 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           compact: false,
-          presets: ['latest', 'react'],
+          presets: ['env', 'react'],
         },
       },
     ],

@@ -1,5 +1,5 @@
 {
-  "name": "react-project-boilerplate",
+  "name": "music-chart-maker",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
@@ -9,24 +9,17 @@
     "watch-sass": "node-sass --watch --include-path scss src/scss/style.scss build/css/style.css",
     "watch-react": "webpack --progress --colors --display-error-details --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/austingray/react-project-boilerplate.git"
-  },
   "keywords": [
     "react",
     "boilerplate"
   ],
   "author": "Austin Gray",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/austingray/react-project-boilerplate/issues"
-  },
-  "homepage": "https://github.com/austingray/react-project-boilerplate#readme",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "eslint": "^3.19.0",
@@ -35,11 +28,12 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "node-sass": "^4.5.2",
-    "webpack": "^2.4.1"
+    "webpack": "^3.10.0"
   },
   "dependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "styled-components": "^3.1.3"
   }
 }
